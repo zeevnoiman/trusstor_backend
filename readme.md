@@ -4,3 +4,6 @@ Notifications logic is made up of three cron jobs:
 1) Make polling on the database once a day, put todos reaching their limits tomorrow on local memory, and send notification about those todos. 
 2) Make polling on the database once per three hours to update the local memory.
 3) Make polling on local memory every hour to pick todos reaching their limits in the next three hours 
+
+## How to run
+Run docker compose up on root directory.
