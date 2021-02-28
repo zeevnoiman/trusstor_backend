@@ -1,0 +1,3 @@
+#Todos Backend
+The system is built from 3 microservices and a mongo database. Web api to process crud operations on todos, data layer to make operations to the database, notifications to control the jobs, and notification logic.
+Notifications logic is three cron jobs: 1) Make polling on the database once a day, put todos reaching their limits tomorrow on local memory, and send notification about those todos. 2) Make polling on the database once per three hours to update the local memory. 3) Make polling on local memory every hour to pick todos reaching their limits in the next three hours 

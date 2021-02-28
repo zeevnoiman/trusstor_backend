@@ -1,0 +1,49 @@
+version: '3.4'
+
+services:
+  webapi:
+    build:
+      context: ./web_api
+      dockerfile: ./Dockerfile
+    environment:
+      NODE_ENV: production
+    working_dir: /usr/src/app
+    volumes:
+      - ./web_api:/usr/src/app
+    ports:
+      - 3000:3000
+  db_todos:
+    image: mongo
+    restart: always
+    env_file: ./data_layer/.env
+    volumes: 
+      - db:/data/db
+  data_layer:
+    build: 
+      context: ./data_layer
+      dockerfile: ./Dockerfile
+    environment:
+      NODE_ENV: production
+    working_dir: /usr/src/app
+    volumes:
+      - ./data_layer:/usr/src/app
+    ports:
+      - 3333:3333
+    depends_on:
+      - db_todos
+  notification:
+    build: 
+      context: ./notification
+      dockerfile: ./Dockerfile
+    environment:
+      NODE_ENV: production
+    working_dir: /usr/src/app
+    volumes:
+      - ./notification:/usr/src/app
+    ports:
+      - 8080:8080
+    depends_on:
+      - db_todos
+
+volumes: 
+  db:
